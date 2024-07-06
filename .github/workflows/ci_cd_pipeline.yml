@@ -105,7 +105,6 @@ jobs:
       - name: Tag Docker image
         run: |
           docker tag shipping-service:${{ inputs.IMAGE_TAG }} ${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:${{ inputs.IMAGE_TAG }} 
-          docker tag shipping-service:${{ inputs.IMAGE_TAG }} ${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:${{ inputs.IMAGE_TAG }}-${{ github.sha }}
 
       - name: Push Docker image to ECR
-        run: docker push ${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:${{ inputs.IMAGE_TAG }}-${{ github.sha }}
+        run: docker push ${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:${{ inputs.IMAGE_TAG }}

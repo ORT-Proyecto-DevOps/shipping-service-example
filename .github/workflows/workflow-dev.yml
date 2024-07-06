@@ -18,7 +18,7 @@ jobs:
     uses: ORT-Proyecto-DevOps/shipping-service-example/.github/workflows/ci_cd_pipeline.yml@develop
     with:
       CI_ENV: develop
-      IMAGE_TAG: 'develop'
+      IMAGE_TAG: 'shipping-service-develop'
     secrets:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

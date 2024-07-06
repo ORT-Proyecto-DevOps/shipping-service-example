@@ -57,6 +57,9 @@ jobs:
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
 
+      - name: Export JAVA_HOME
+        run: echo "JAVA_HOME=$(dirname $(dirname $(readlink -f $(which java))))" >> $GITHUB_ENV
+
   sonarcloud:
     runs-on: ubuntu-latest
     needs: setup

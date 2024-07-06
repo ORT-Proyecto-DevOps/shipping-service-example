@@ -98,7 +98,7 @@ jobs:
         run: aws ecr get-login-password --region ${{ secrets.AWS_DEFAULT_REGION }} | docker login --username AWS --password-stdin ${{ secrets.ECR_REGISTRY }}
 
       - name: Build Docker image
-        run: docker build -t shipping-service .
+        run: docker build -t shipping-service:${{ inputs.IMAGE_TAG }} .
 
       - name: Verify Docker images
         run: docker images

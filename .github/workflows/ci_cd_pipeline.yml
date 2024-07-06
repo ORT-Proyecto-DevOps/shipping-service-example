@@ -100,8 +100,16 @@ jobs:
       - name: Build Docker image
         run: docker build -t shipping-service .
 
+      - name: Verify Docker images
+        run: docker images
+
       - name: Tag Docker image
-        run: docker tag shipping-service:${{ inputs.IMAGE_TAG }} ${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:${{ inputs.IMAGE_TAG }}
+        run: |
+          echo "Tagging image: shipping-service:${{ inputs.IMAGE_TAG }} as ${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:${{ inputs.IMAGE_TAG }}"
+          docker tag shipping-service:${{ inputs.IMAGE_TAG }} ${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:${{ inputs.IMAGE_TAG }}
+
+      # - name: Tag Docker image
+      #   run: docker tag shipping-service:${{ inputs.IMAGE_TAG }} ${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:${{ inputs.IMAGE_TAG }}
 
       - name: Push Docker image to ECR
         run: docker push ${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:${{ inputs.IMAGE_TAG }}

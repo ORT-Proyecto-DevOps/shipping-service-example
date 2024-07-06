@@ -47,6 +47,9 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
 
+      - name: List files in the repository root for debugging
+        run: ls -la
+
   sonarcloud:
     runs-on: ubuntu-latest
     needs: setup
@@ -62,11 +65,14 @@ jobs:
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
 
+      - name: List files in the repository root for debugging
+        run: ls -la
+
       - name: Build and analyze
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_SHIPPING_SERVICE }}
-        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=ORT-Proyecto-DevOps_shipping-service-example
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=ORT-Proyecto-DevOps_shipping-service-example -e -X
 
   build:
     runs-on: ubuntu-latest
@@ -76,8 +82,11 @@ jobs:
       - name: Use setup outputs
         run: echo "Reusing setup job outputs"
 
+      - name: List files in the repository root for debugging
+        run: ls -la
+
       - name: Build with Maven
-        run: mvn clean install
+        run: mvn clean install -e -X
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
